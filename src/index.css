@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
+@layer base {
+    :root {
+        --primary: #10b981;
+        --primary-dark:#6ee7b7;
+        --primary-light:#047857;
+        --secondary: #ffff;
+        --background: #ecfdf5;
+        --task-bg: #c2c2c2;
+        --tag-bg: #c2c2c2;
+        --tag-color: #c2c2c2;
+        --alert:#dc2626;
+
+    }
+    .dark {
+    }
+  }
+  
