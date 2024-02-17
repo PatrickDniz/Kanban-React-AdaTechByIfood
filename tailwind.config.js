@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -7,24 +8,62 @@ export default {
     './src/**/*.{ts,tsx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
       colors: {
-      'primary': "var(--primary)",
-      'primary-dark':"var(--primary-dark)",
-      'primary-light':"var(--primary-light)",
-      'secondary': "var(--secondary)",
-      'background': "var(--background)",
-      'task-bg': "var(--task-bg)",
-      'tag-bg': "var(--tag-bg)",
-      'tag-color': "var(--tag-color)",
-      'alert': 'var(--alert)'
-    },
-    fontFamily: {
-      sans: ['Inter', 'sans-serif'],
-      inter: ['Inter', 'serif'],
-    },
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        hero: 'var(--hero)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
+        },
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
+        },
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
+      backgroundImage: {
+        'hero-pattern': "url('./assets/kanbanHero1.jpeg')",
+      },
     },
   },
   plugins: [],
 }
-

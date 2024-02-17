@@ -1,7 +1,15 @@
+import './index.css'
+
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes'
+import { ThemeProvider } from './components/theme/ThemeProvider'
+
 function App() {
   return (
     <>
-      <h1 className="bg-primary">teste</h1>
+      <ThemeProvider defaultTheme="dark" storageKey="Kanbanana-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </>
   )
 }
