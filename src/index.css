@@ -53,6 +53,12 @@
 }
 
 @layer base {
+    .nav-side-Bar{
+        @apply duration-300 min-h-screen px-4 flex flex-col bg-primary border-r shadow-sm text-secondary
+    }
+    .li-side-bar{
+        @apply flex flex-row mt-10 gap-4 rounded-md pl-2 h-10 cursor-pointer hover:text-primary hover:bg-background
+    }
   * {
     @apply border-border;
   }
