@@ -1,15 +1,14 @@
 interface TaskProps {
-  keyTask: string;
-  value: string;
-  status: string;
-  remove: (taskId: string) => void;
+  keyTask: string
+  value: string
+  status: string
+  remove: (taskId: string) => void
 }
 
 const Task = ({ keyTask, value, status, remove }: TaskProps) => {
-
   const handleRemoveTask = () => {
-    remove(keyTask);
-  };
+    remove(keyTask)
+  }
 
   return (
     <li key={keyTask} className="task">
@@ -17,7 +16,7 @@ const Task = ({ keyTask, value, status, remove }: TaskProps) => {
       <div> {status} </div>
       <button onClick={handleRemoveTask}>Remover</button>
     </li>
-  );
-};
+  )
+}
 
-export {Task};
+export { Task }

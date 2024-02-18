@@ -13,7 +13,7 @@ function SignIn() {
 
     setTimeout(() => {
       setIsLoading(false)
-    }, 3000)
+    }, 1000)
   }
 
   return (

@@ -12,8 +12,8 @@ function Error() {
       <pre>{error?.message || JSON.stringify(error)}</pre>
       <p className="text-accent-foreground">
         Voltar para o{' '}
-        <Link to="/" className="text-sky-600 dark:text-sky-400">
-          Dashboard
+        <Link to="/board" className="text-primary">
+          Board
         </Link>
       </p>
     </div>
