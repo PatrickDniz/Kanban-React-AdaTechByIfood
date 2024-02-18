@@ -3,7 +3,7 @@ import TypewriterEffect from '../../components/ui/TypewriterEffect'
 import { LuBanana } from 'react-icons/lu'
 import { Button } from '@/components/ui/Button'
 
-function Hero() {
+function HeroLayout() {
   const words = [
     {
       text: 'Seu',
@@ -56,4 +56,4 @@ function Hero() {
   )
 }
 
-export default Hero
+export default HeroLayout
