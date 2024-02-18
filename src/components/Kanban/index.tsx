@@ -4,7 +4,8 @@ import { Column } from './../Column'
 interface TaskProps {
   key: string
   value: string
-  status: string
+  col: string
+  description: string
 }
 
 interface KanbanProps {
@@ -21,7 +22,7 @@ const Kanban: React.FC<KanbanProps> = ({ tasks }) => {
   const [done, setDone] = useState(tasks.done)
 
   return (
-    <div className="kanbanBoard">
+    <div className="m-2 flex flex-1 justify-start gap-5 overflow-x-auto p-4">
       <Column
         title="A fazer"
         tasks={todo}
