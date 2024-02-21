@@ -4,6 +4,7 @@ import { LuClipboardSignature } from 'react-icons/lu'
 import { FaUserGroup } from 'react-icons/fa6'
 import { SiGoogleforms } from 'react-icons/si'
 import { CiSettings } from 'react-icons/ci'
+import { Link } from 'react-router-dom'
 
 export interface SideProps {
   propsInit?: boolean
@@ -34,7 +35,7 @@ const SideBar: React.FC = () => {
             >
               <FaUserGroup size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
-                Equipes
+                <Link to="/team">Equipes</Link>
               </span>
             </li>
             <li
