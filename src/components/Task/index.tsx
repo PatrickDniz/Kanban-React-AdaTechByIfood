@@ -1,16 +1,26 @@
-import { FaRegTrashAlt } from 'react-icons/fa'
+import { FaRegTrashAlt ,FaArrowRight, FaArrowLeft} from 'react-icons/fa'
 interface TaskProps {
   keyTask: string
   value: string
   description: string
   col: string
   remove: (taskId: string) => void
+  moveTaskToNextColumn: (taskId: string, currentCol: string) => void;
+  moveTaskToPreviousColumn: (taskId: string, currentCol: string) => void;
 }
 
-const Task = ({ keyTask, value, description, col, remove }: TaskProps) => {
+const Task = ({ keyTask, value, description, col, remove, moveTaskToNextColumn, moveTaskToPreviousColumn, }: TaskProps) => {
   const handleRemoveTask = () => {
     remove(keyTask)
   }
+
+  const handleMoveNext = () => {
+    moveTaskToNextColumn(keyTask, col);
+  };
+
+  const handleMovePrevious = () => {
+    moveTaskToPreviousColumn(keyTask, col);
+  };
 
   return (
     <li
@@ -27,6 +37,24 @@ const Task = ({ keyTask, value, description, col, remove }: TaskProps) => {
         <FaRegTrashAlt />
         Remover
       </button>
+      <div className='flex flex-row gap-3'>
+          <button
+            className="flex items-center justify-center gap-1 text-foreground hover:text-primary"
+            onClick={handleMovePrevious}
+             // Desabilita o botão se a tarefa estiver na coluna "A fazer"
+          >
+            <FaArrowLeft />
+            Coluna Anterior
+          </button> 
+          <button
+            className="flex items-center justify-center gap-1 text-foreground hover:text-primary"
+            onClick={handleMoveNext}
+             // Desabilita o botão se a tarefa estiver na coluna "Concluído"
+          >
+            Próxima Coluna
+            <FaArrowRight />
+          </button>
+        </div>
     </li>
   )
 }

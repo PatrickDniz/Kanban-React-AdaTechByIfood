@@ -21,6 +21,51 @@ const Kanban: React.FC<KanbanProps> = ({ tasks }) => {
   const [inProgress, setInProgress] = useState(tasks.inProgress)
   const [done, setDone] = useState(tasks.done)
 
+  const moveTaskToNextColumn = (taskId: string, currentCol: string) => {
+    switch (currentCol) {
+      case 'A fazer':
+        let taskToMoveToDoing = todo.find((task) => task.key === taskId);
+        if (taskToMoveToDoing) {
+          setTodo(todo.filter((task) => task.key !== taskId));
+          setInProgress([...inProgress, taskToMoveToDoing]);
+        }
+        break;
+      case 'Em Progresso':
+        let taskToMoveToDone = inProgress.find((task) => task.key === taskId);
+        if (taskToMoveToDone) {
+          setInProgress(inProgress.filter((task) => task.key !== taskId));
+          setDone([...done, taskToMoveToDone]);
+        }
+        break;
+      default:
+        // Não faz nada se a tarefa já estiver na coluna "Concluído"
+        break;
+    }
+  };
+
+  const moveTaskToPreviousColumn = (taskId: string, currentCol: string) => {
+    console.log(currentCol)
+    switch (currentCol) {
+      case 'A fazer':
+        let taskToMoveToToDoing = inProgress.find((task) => task.key === taskId);
+        if (taskToMoveToToDoing) {
+          setInProgress(inProgress.filter((task) => task.key !== taskId));
+          setTodo([...todo, taskToMoveToToDoing]);
+        }
+        break;
+      case 'Concluído':
+        let taskToMoveToInProgress = done.find((task) => task.key === taskId);
+        if (taskToMoveToInProgress) {
+          setDone(done.filter((task) => task.key !== taskId));
+          setInProgress([...inProgress, taskToMoveToInProgress]);
+        }
+        break;
+      default:
+       
+        break;
+    }
+  };
+
   return (
     <div className="m-2 flex flex-1 justify-start gap-5 overflow-x-auto p-4">
       <Column
@@ -28,24 +73,26 @@ const Kanban: React.FC<KanbanProps> = ({ tasks }) => {
         tasks={todo}
         onAddTask={(task) => setTodo((todo) => [...todo, task])}
         onRemoveTask={(key) => {
-          setTodo(todo.filter((task) => task.key !== key))
+          setTodo(todo.filter((task) => task.key !== key));
         }}
+        moveTaskToNextColumn={moveTaskToNextColumn}
+        moveTaskToPreviousColumn={() => {}}
       />
       <Column
         title="Em Progresso"
         tasks={inProgress}
-        onAddTask={(task) =>
-          setInProgress((inProgress) => [...inProgress, task])
-        }
-        onRemoveTask={(key) =>
-          setInProgress(inProgress.filter((task) => task.key !== key))
-        }
+        onAddTask={(task) => setInProgress((inProgress) => [...inProgress, task])}
+        onRemoveTask={(key) => setInProgress(inProgress.filter((task) => task.key !== key))}
+        moveTaskToNextColumn={moveTaskToNextColumn}
+        moveTaskToPreviousColumn={moveTaskToPreviousColumn}
       />
       <Column
         title="Concluído"
         tasks={done}
         onAddTask={(task) => setDone((done) => [...done, task])}
         onRemoveTask={(key) => setDone(done.filter((task) => task.key !== key))}
+        moveTaskToNextColumn={() => {}}
+        moveTaskToPreviousColumn={moveTaskToPreviousColumn}
       />
     </div>
   )
