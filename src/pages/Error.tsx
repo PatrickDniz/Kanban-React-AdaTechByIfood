@@ -1,6 +1,6 @@
 import { Link, useRouteError } from 'react-router-dom'
 
-function Error() {
+const Error = () => {
   const error = useRouteError() as Error
 
   return (
@@ -11,13 +11,13 @@ function Error() {
       </p>
       <pre>{error?.message || JSON.stringify(error)}</pre>
       <p className="text-accent-foreground">
-        Voltar para o{' '}
-        <Link to="/board" className="text-primary">
-          Board
+        Voltar para a{' '}
+        <Link to="/" className="text-primary">
+          Página Inicial
         </Link>
       </p>
     </div>
   )
 }
 
-export default Error
+export { Error }

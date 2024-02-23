@@ -1,48 +1,55 @@
-import { Link } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { signUp } from '@/api/signUp'
 
 import { Button } from '@/components/ui/Button'
-import { useState } from 'react'
+import { ImSpinner2 } from 'react-icons/im'
+import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
 
-const signUpForm = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(8),
+const signUpFormSchema = z.object({
+  name: z.string().min(3, 'O nome deve conter pelo menos 3 caracteres'),
+  email: z.string().email('O email deve ser um email valido'),
+  password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
 })
 
-type SignUpForm = z.infer<typeof signUpForm>
+type SignUpForm = z.infer<typeof signUpFormSchema>
 
-function SignUp() {
-  const [formData, setFormData] = useState<SignUpForm>({
-    name: '',
-    email: '',
-    password: '',
+const SignUp = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const navigate = useNavigate()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm<SignUpForm>({
+    resolver: zodResolver(signUpFormSchema),
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [id]: value,
-    }))
-  }
+  const { mutateAsync: signUpFn } = useMutation({
+    mutationFn: signUp,
+  })
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const validationResult = signUpForm.safeParse(formData)
-    if (validationResult.success) {
-      const usersData = JSON.parse(localStorage.getItem('usersData') || '{}')
+  async function handleSignUp(data: SignUpForm) {
+    try {
+      setIsLoading(true)
+      await signUpFn({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      })
 
-      const updatedUsersData = {
-        ...usersData,
-        [formData.email]: formData,
-      }
-
-      localStorage.setItem('usersData', JSON.stringify(updatedUsersData))
-
-      console.log('Dados salvos com sucesso!')
-    } else {
-      console.error('Erro de validação:', validationResult.error)
+      setIsLoading(false)
+      alert('Conta criada com sucesso!')
+      navigate(`/sign-in?email=${data.email}`)
+    } catch (error) {
+      setIsLoading(false)
+      alert('Erro ao cadastrar usuário. Tente novamente mais tarde!')
     }
   }
   return (
@@ -58,7 +65,7 @@ function SignUp() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
             <div className="space-y-2">
               <div className="relative z-0 ">
                 <input
@@ -66,8 +73,7 @@ function SignUp() {
                   type="text"
                   className="peer block h-9 w-full appearance-none border-0 border-b-2 border-input bg-transparent px-0 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-0"
                   placeholder=" "
-                  value={formData.name}
-                  onChange={handleChange}
+                  {...register('name')}
                 />
                 <label
                   htmlFor="name"
@@ -75,6 +81,11 @@ function SignUp() {
                 >
                   Seu nome
                 </label>
+                {errors.name && (
+                  <span className="mt-2 text-xs text-destructive">
+                    {errors.name.message}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -85,8 +96,7 @@ function SignUp() {
                   type="email"
                   className="peer block h-9 w-full appearance-none border-0 border-b-2 border-input bg-transparent px-0 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-0"
                   placeholder=" "
-                  value={formData.email}
-                  onChange={handleChange}
+                  {...register('email')}
                 />
                 <label
                   htmlFor="email"
@@ -94,6 +104,11 @@ function SignUp() {
                 >
                   Seu e-mail
                 </label>
+                {errors.email && (
+                  <span className="mt-2 text-xs text-destructive">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -101,11 +116,11 @@ function SignUp() {
               <div className="relative z-0 ">
                 <input
                   id="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   className="peer block h-9 w-full appearance-none border-0 border-b-2 border-input bg-transparent px-0 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-0"
                   placeholder=" "
-                  value={formData.password}
-                  onChange={handleChange}
+                  autoComplete="new-password"
+                  {...register('password')}
                 />
                 <label
                   htmlFor="password"
@@ -113,11 +128,34 @@ function SignUp() {
                 >
                   Sua senha
                 </label>
+                <button
+                  type="button"
+                  className="absolute right-0 top-3 flex items-center pr-2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <MdOutlineVisibility />
+                  ) : (
+                    <MdOutlineVisibilityOff />
+                  )}
+                </button>
+                {errors.password && (
+                  <span className="mt-2 text-xs text-destructive">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
             </div>
 
-            <Button className="w-full " type="submit">
-              Finalizar cadastro
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading && isSubmitting}
+            >
+              {isLoading ? (
+                <ImSpinner2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
+              Finalizar Cadastro
             </Button>
 
             <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
@@ -165,4 +203,4 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export { SignUp }

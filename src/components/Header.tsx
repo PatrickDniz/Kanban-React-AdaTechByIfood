@@ -2,10 +2,9 @@ import { LuBanana } from 'react-icons/lu'
 
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { Link } from 'react-router-dom'
-import { RxAvatar } from 'react-icons/rx'
-import { Button } from '../ui/Button'
+import { Avatar } from './Avatar'
 
-export function Header() {
+const Header = () => {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center gap-6 px-6">
@@ -19,11 +18,11 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
-          <Button variant={'outline'} size={'icon'} className="rounded-md">
-            <RxAvatar className="h-9 w-9" />
-          </Button>
+          <Avatar />
         </div>
       </div>
     </div>
   )
 }
+
+export { Header }
