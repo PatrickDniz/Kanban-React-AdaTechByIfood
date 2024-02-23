@@ -23,45 +23,54 @@ const Kanban: React.FC<KanbanProps> = ({ tasks }) => {
 
   const moveTaskToNextColumn = (taskId: string, currentCol: string) => {
     switch (currentCol) {
-      case 'A fazer':
-        let taskToMoveToDoing = todo.find((task) => task.key === taskId);
+      case 'A Fazer':
+        const taskToMoveToDoing = todo.find(task => task.key === taskId);
         if (taskToMoveToDoing) {
           setTodo(todo.filter((task) => task.key !== taskId));
-          setInProgress([...inProgress, taskToMoveToDoing]);
+          if (taskToMoveToDoing.col === "A Fazer") {
+              taskToMoveToDoing.col = "Em Progresso"
+              setInProgress([...inProgress, taskToMoveToDoing]);
+          }
         }
         break;
       case 'Em Progresso':
-        let taskToMoveToDone = inProgress.find((task) => task.key === taskId);
+        const taskToMoveToDone = inProgress.find(task => task.key === taskId);
         if (taskToMoveToDone) {
-          setInProgress(inProgress.filter((task) => task.key !== taskId));
-          setDone([...done, taskToMoveToDone]);
+          setInProgress(inProgress.filter(task => task.key !== taskId));
+          if (taskToMoveToDone.col === "Em Progresso") {
+              taskToMoveToDone.col = "Concluído"
+              setDone([...done, taskToMoveToDone]);
+          }
         }
         break;
       default:
-        // Não faz nada se a tarefa já estiver na coluna "Concluído"
         break;
     }
   };
 
   const moveTaskToPreviousColumn = (taskId: string, currentCol: string) => {
-    console.log(currentCol)
     switch (currentCol) {
-      case 'A fazer':
-        let taskToMoveToToDoing = inProgress.find((task) => task.key === taskId);
+      case 'Em Progresso':
+        const taskToMoveToToDoing = inProgress.find(task => task.key === taskId);
         if (taskToMoveToToDoing) {
-          setInProgress(inProgress.filter((task) => task.key !== taskId));
-          setTodo([...todo, taskToMoveToToDoing]);
+          setInProgress(inProgress.filter(task => task.key !== taskId));
+          if (taskToMoveToToDoing.col === "Em Progresso") {
+              taskToMoveToToDoing.col = "A Fazer"
+              setTodo([...todo, taskToMoveToToDoing]);
+          }
         }
         break;
       case 'Concluído':
-        let taskToMoveToInProgress = done.find((task) => task.key === taskId);
+        const taskToMoveToInProgress = done.find(task => task.key === taskId);
         if (taskToMoveToInProgress) {
-          setDone(done.filter((task) => task.key !== taskId));
-          setInProgress([...inProgress, taskToMoveToInProgress]);
+          setDone(done.filter(task => task.key !== taskId));
+          if (taskToMoveToInProgress.col === "Concluído") {
+              taskToMoveToInProgress.col = "Em Progresso"
+              setInProgress([...inProgress, taskToMoveToInProgress]);
+          }
         }
         break;
       default:
-       
         break;
     }
   };
@@ -69,7 +78,7 @@ const Kanban: React.FC<KanbanProps> = ({ tasks }) => {
   return (
     <div className="m-2 flex flex-1 justify-start gap-5 overflow-x-auto p-4">
       <Column
-        title="A fazer"
+        title="A Fazer"
         tasks={todo}
         onAddTask={(task) => setTodo((todo) => [...todo, task])}
         onRemoveTask={(key) => {
