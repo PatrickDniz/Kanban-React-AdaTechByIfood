@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Task } from './../Task'
+import { Task } from './Task.tsx'
 import { MdOutlineAddToPhotos } from 'react-icons/md'
-import { ModalTask } from '../ModalTask/ModalTask.tsx'
+import { ModalTask } from './ModalTask.tsx'
 
 interface TaskProps {
   key: string
@@ -15,8 +15,8 @@ interface ColumnProps {
   tasks: TaskProps[]
   onAddTask: (task: TaskProps) => void
   onRemoveTask: (key: string) => void
-  moveTaskToNextColumn: (taskId: string, currentCol: string) => void;
-  moveTaskToPreviousColumn: (taskId: string, currentCol: string) => void;
+  moveTaskToNextColumn: (taskId: string, currentCol: string) => void
+  moveTaskToPreviousColumn: (taskId: string, currentCol: string) => void
 }
 
 const Column: React.FC<ColumnProps> = ({

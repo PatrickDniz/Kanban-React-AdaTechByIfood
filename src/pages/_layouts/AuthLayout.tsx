@@ -2,7 +2,7 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { LuBanana } from 'react-icons/lu'
 import { Link, Outlet } from 'react-router-dom'
 
-function AuthLayout() {
+const AuthLayout = () => {
   return (
     <div className="grid min-h-screen antialiased md:grid-cols-2">
       <div className="hidden h-full flex-col justify-between p-10 text-muted-foreground md:flex md:border-r md:bg-primary">
@@ -32,4 +32,4 @@ function AuthLayout() {
   )
 }
 
-export default AuthLayout
+export { AuthLayout }

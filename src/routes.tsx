@@ -1,13 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Error from './pages/Error'
-import NotFound from './pages/NotFound404'
-import AuthLayout from './pages/_layouts/AuthLayout'
-import SignIn from './pages/auth/SignIn'
-import SignUp from './pages/auth/SignUp'
-import HeroLayout from './pages/_layouts/HeroLayout'
-import AppLayout from './pages/_layouts/AppLayout'
-import Board from './pages/app/board/Board'
-import Team from './pages/app/team/Team'
+import { Error } from './pages/Error'
+import { NotFound } from './pages/NotFound404'
+import { AuthLayout } from './pages/_layouts/AuthLayout'
+import { SignIn } from './pages/auth/SignIn'
+import { SignUp } from './pages/auth/SignUp'
+import { HeroLayout } from './pages/_layouts/HeroLayout'
+import { AppLayout } from './pages/_layouts/AppLayout'
+import { Board } from './pages/app/board/Board'
 
 export const router = createBrowserRouter([
   {
@@ -38,11 +37,6 @@ export const router = createBrowserRouter([
       {
         path: '/board',
         element: <Board />,
-      },
-      {
-        path: '/team',
-        element: <Team />,
-        errorElement: <Error />,
       },
     ],
   },

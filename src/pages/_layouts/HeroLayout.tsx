@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import TypewriterEffect from '../../components/ui/TypewriterEffect'
+import { TypewriterEffect } from '@/components/ui/TypewriterEffect'
 import { LuBanana } from 'react-icons/lu'
 import { Button } from '@/components/ui/Button'
 
-function HeroLayout() {
+const HeroLayout = () => {
   const words = [
     {
       text: 'Seu',
@@ -56,4 +56,4 @@ function HeroLayout() {
   )
 }
 
-export default HeroLayout
+export { HeroLayout }

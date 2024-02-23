@@ -180,4 +180,4 @@ export const TypewriterEffectSmooth = ({
   )
 }
 
-export default TypewriterEffect
+export { TypewriterEffect }

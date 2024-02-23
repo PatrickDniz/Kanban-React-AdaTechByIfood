@@ -1,19 +1,51 @@
-import { Link } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { Link, useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
+
+import { signIn } from '@/api/signIn'
+import { Button } from '@/components/ui/Button'
+import { useState } from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { ImSpinner2 } from 'react-icons/im'
-import { SyntheticEvent, useState } from 'react'
-import { Button } from '@/components/ui/Button'
 
-function SignIn() {
+const signInFormSchema = z.object({
+  email: z.string().email(),
+})
+
+type SignInForm = z.infer<typeof signInFormSchema>
+
+const SignIn = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [searchParams] = useSearchParams()
 
-  async function onSubmit(event: SyntheticEvent) {
-    event.preventDefault()
-    setIsLoading(true)
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignInForm>({
+    defaultValues: {
+      email: searchParams.get('email') ?? '',
+    },
+  })
 
-    setTimeout(() => {
+  const { mutateAsync: authenticate } = useMutation({ mutationFn: signIn })
+
+  async function handleSignIn(data: SignInForm) {
+    if (!data.email) {
+      return
+    }
+    try {
+      setIsLoading(true)
+      await authenticate({
+        email: data.email,
+      })
+      alert('Enviamos um link de autenticação para seu e-mail.')
       setIsLoading(false)
-    }, 1000)
+    } catch (error) {
+      setIsLoading(false)
+      alert('Credenciais inválidas.')
+    }
   }
 
   return (
@@ -29,7 +61,7 @@ function SignIn() {
             </p>
           </div>
 
-          <form className="space-y-4" onSubmit={onSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit(handleSignIn)}>
             <div className="space-y-2">
               <div className="relative z-0">
                 <input
@@ -37,6 +69,7 @@ function SignIn() {
                   type="email"
                   className="peer block h-9 w-full appearance-none border-0 border-b-2 border-input bg-transparent px-0 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-0"
                   placeholder=" "
+                  {...register('email')}
                 />
                 <label
                   htmlFor="email"
@@ -46,22 +79,7 @@ function SignIn() {
                 </label>
               </div>
             </div>
-            <div className="space-y-2">
-              <div className="relative z-0 ">
-                <input
-                  id="password"
-                  type="password"
-                  className="peer block h-9 w-full appearance-none border-0 border-b-2 border-input bg-transparent px-0 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-0"
-                  placeholder=" "
-                />
-                <label
-                  htmlFor="password"
-                  className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm font-light leading-none duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-                >
-                  Sua senha
-                </label>
-              </div>
-            </div>
+
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
@@ -71,7 +89,7 @@ function SignIn() {
                       aria-describedby="remember"
                       type="checkbox"
                       value=""
-                      className="h-4 w-4 rounded border text-primary accent-primary "
+                      className="h-3 w-3 rounded border text-primary accent-primary "
                     />
                   </div>
                   <div className="ml-3 text-sm">
@@ -92,11 +110,14 @@ function SignIn() {
               </div>
             </div>
             <div className="space-y-2">
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading
-                  ? (console.log(isLoading),
-                    (<ImSpinner2 className="mr-2 h-4 w-4 animate-spin" />))
-                  : null}
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoading && isSubmitting}
+              >
+                {isLoading ? (
+                  <ImSpinner2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : null}
                 Entrar
               </Button>
             </div>
@@ -137,4 +158,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export { SignIn }
