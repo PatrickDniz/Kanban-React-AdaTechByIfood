@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { HiMenuAlt3 } from 'react-icons/hi'
+
 import { LuClipboardSignature } from 'react-icons/lu'
 import { FaUserGroup } from 'react-icons/fa6'
 import { SiGoogleforms } from 'react-icons/si'
 import { CiSettings } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
+
+import { LuKanban, LuClipboardEdit } from 'react-icons/lu'
+import { AiOutlineTeam } from 'react-icons/ai'
+import { IoSettingsOutline } from 'react-icons/io5'
+
 
 export interface SideProps {
   propsInit?: boolean
@@ -13,7 +19,7 @@ const SideBar: React.FC = () => {
   const [open, setOpen] = useState(true)
   return (
     <>
-      <aside className="h-screen">
+      <aside className="">
         <nav className={`${open ? 'w-56' : 'w-16'} nav-side-Bar`}>
           <div
             className={`flex py-3 ${open ? 'justify-end' : 'justify-center'}`}
@@ -25,7 +31,7 @@ const SideBar: React.FC = () => {
             <li
               className={`li-side-bar ${open ? 'items-center' : 'items-center justify-center pl-0'}`}
             >
-              <LuClipboardSignature size={22} />
+              <LuKanban size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
                 Boards
               </span>
@@ -33,7 +39,7 @@ const SideBar: React.FC = () => {
             <li
               className={`li-side-bar ${open ? 'items-center' : 'items-center justify-center pl-0'}`}
             >
-              <FaUserGroup size={22} />
+              <AiOutlineTeam size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
                 <Link to="/team">Equipes</Link>
               </span>
@@ -41,7 +47,7 @@ const SideBar: React.FC = () => {
             <li
               className={`li-side-bar ${open ? 'items-center' : 'items-center justify-center pl-0'}`}
             >
-              <SiGoogleforms size={22} />
+              <LuClipboardEdit size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
                 Relatórios
               </span>
@@ -49,7 +55,7 @@ const SideBar: React.FC = () => {
             <li
               className={`li-side-bar ${open ? 'items-center' : 'items-center justify-center pl-0'}`}
             >
-              <CiSettings size={22} />
+              <IoSettingsOutline size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
                 Ajustes
               </span>

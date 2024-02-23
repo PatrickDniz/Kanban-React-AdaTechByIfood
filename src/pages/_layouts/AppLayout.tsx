@@ -7,7 +7,7 @@ function AppLayout() {
     <>
       <div className="flex min-h-screen flex-col antialiased">
         <Header />
-        <div className="flex min-h-screen gap-4 marker:flex-1">
+        <div className="flex h-5/6 flex-1 gap-4 marker:flex-1">
           <SideBar />
 
           <Outlet />
