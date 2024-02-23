@@ -23,17 +23,23 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         hero: 'var(--hero)',
+        hover: 'var(--primary-hover)',
+        hoverS: 'var(--secondary-hover)',
+        hoverD: 'var(--destructive-hover)',
         primary: {
           DEFAULT: 'var(--primary)',
           foreground: 'var(--primary-foreground)',
+          hover: 'var(--primary-hover)',
         },
         secondary: {
           DEFAULT: 'var(--secondary)',
           foreground: 'var(--secondary-foreground)',
+          hoverS: 'var(--secondary-hover)',
         },
         destructive: {
           DEFAULT: 'var(--destructive)',
           foreground: 'var(--destructive-foreground)',
+          hoverD: 'var(--destructive-hover)',
         },
         muted: {
           DEFAULT: 'var(--muted)',

@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
 import { HiMenuAlt3 } from 'react-icons/hi'
-
-import { LuClipboardSignature } from 'react-icons/lu'
-import { FaUserGroup } from 'react-icons/fa6'
-import { SiGoogleforms } from 'react-icons/si'
-import { CiSettings } from 'react-icons/ci'
-import { Link } from 'react-router-dom'
-
-import { LuKanban, LuClipboardEdit } from 'react-icons/lu'
+import { LuKanban } from 'react-icons/lu'
+import { HiOutlineClipboardDocumentList } from 'react-icons/hi2'
 import { AiOutlineTeam } from 'react-icons/ai'
 import { IoSettingsOutline } from 'react-icons/io5'
-
 
 export interface SideProps {
   propsInit?: boolean
@@ -20,7 +13,9 @@ const SideBar: React.FC = () => {
   return (
     <>
       <aside className="">
-        <nav className={`${open ? 'w-56' : 'w-16'} nav-side-Bar`}>
+        <nav
+          className={`${open ? 'w-48' : 'w-16'} flex h-full flex-col border-r bg-primary px-4 text-foreground shadow-sm duration-300`}
+        >
           <div
             className={`flex py-3 ${open ? 'justify-end' : 'justify-center'}`}
             onClick={() => setOpen(!open)}
@@ -41,13 +36,13 @@ const SideBar: React.FC = () => {
             >
               <AiOutlineTeam size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
-                <Link to="/team">Equipes</Link>
+                Equipes
               </span>
             </li>
             <li
               className={`li-side-bar ${open ? 'items-center' : 'items-center justify-center pl-0'}`}
             >
-              <LuClipboardEdit size={22} />
+              <HiOutlineClipboardDocumentList size={22} />
               <span className={`${!open && 'hidden'} origin-left duration-500`}>
                 Relatórios
               </span>
@@ -67,4 +62,4 @@ const SideBar: React.FC = () => {
   )
 }
 
-export default SideBar
+export { SideBar }
