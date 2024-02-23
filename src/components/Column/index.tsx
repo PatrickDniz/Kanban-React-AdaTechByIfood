@@ -15,6 +15,8 @@ interface ColumnProps {
   tasks: TaskProps[]
   onAddTask: (task: TaskProps) => void
   onRemoveTask: (key: string) => void
+  moveTaskToNextColumn: (taskId: string, currentCol: string) => void;
+  moveTaskToPreviousColumn: (taskId: string, currentCol: string) => void;
 }
 
 const Column: React.FC<ColumnProps> = ({
@@ -22,6 +24,8 @@ const Column: React.FC<ColumnProps> = ({
   tasks,
   onAddTask,
   onRemoveTask,
+  moveTaskToNextColumn,
+  moveTaskToPreviousColumn,
 }) => {
   const [opacityModal, setOpacityModal] = useState(false)
 
@@ -62,6 +66,8 @@ const Column: React.FC<ColumnProps> = ({
             description={task.description}
             col={task.col}
             remove={onRemoveTask}
+            moveTaskToNextColumn={moveTaskToNextColumn}
+            moveTaskToPreviousColumn={moveTaskToPreviousColumn}
           />
         ))}
       </ul>
