@@ -7,6 +7,7 @@ import SignUp from './pages/auth/SignUp'
 import HeroLayout from './pages/_layouts/HeroLayout'
 import AppLayout from './pages/_layouts/AppLayout'
 import Board from './pages/app/board/Board'
+import Team from './pages/app/team/Team'
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,11 @@ export const router = createBrowserRouter([
       {
         path: '/board',
         element: <Board />,
+      },
+      {
+        path: '/team',
+        element: <Team />,
+        errorElement: <Error />,
       },
     ],
   },
