@@ -37,23 +37,41 @@ const Task = ({ keyTask, value, description, col, remove, moveTaskToNextColumn, 
         <FaRegTrashAlt />
         Remover
       </button>
-      <div className='flex flex-row gap-3'>
-          <button
-            className="flex items-center justify-center gap-1 text-foreground hover:text-primary"
+      <div className='flex flex-row justify-between gap-3'>
+        { col === "A Fazer" ?
+          (<button
+            className="flex items-center justify-center text-foreground text-gray-400"
             onClick={handleMovePrevious}
-             // Desabilita o botão se a tarefa estiver na coluna "A fazer"
-          >
-            <FaArrowLeft />
-            Coluna Anterior
-          </button> 
+            disabled
+             // Desabilita o botão se a tarefa estiver na coluna "A fazer" 
+             >
+            <FaArrowLeft size={22}/>
+          </button> )
+            :
+          (<button
+            className="flex items-center justify-center text-foreground hover:text-primary"
+            onClick={handleMovePrevious}>
+            <FaArrowLeft size={22}/> 
+          </button>)
+          }
+        { col === "Concluído" ?
           <button
-            className="flex items-center justify-center gap-1 text-foreground hover:text-primary"
+            className="flex items-center justify-center text-foreground text-gray-400"
             onClick={handleMoveNext}
+            disabled
              // Desabilita o botão se a tarefa estiver na coluna "Concluído"
           >
-            Próxima Coluna
-            <FaArrowRight />
+            <FaArrowRight size={22}/>
           </button>
+            :
+            <button
+            className="flex items-center justify-center text-foreground hover:text-primary"
+            onClick={handleMoveNext}
+             
+            >
+            <FaArrowRight size={22}/>
+          </button>
+          }
         </div>
     </li>
   )
